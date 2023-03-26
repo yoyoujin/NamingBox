@@ -33,7 +33,7 @@ export default async function Openaiapi(req, res) {
   try {
     const response = await openai.createCompletion({
       model: 'text-davinci-003',
-      prompt: `Suggest three variable names in camel case for the follow ${animal}`,
+      prompt: `Suggest three programming variable names in camel case for the follow ${animal}`,
       temperature: 0.8,
       max_tokens: 100,
     });
