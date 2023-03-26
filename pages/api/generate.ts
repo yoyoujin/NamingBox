@@ -1,8 +1,8 @@
 import dotenv from 'dotenv';
 import { Configuration, OpenAIApi } from 'openai';
 
-// dotenv.config({ path: __dirname + './env' });
-dotenv.config();
+dotenv.config({ path: __dirname + './env' });
+// dotenv.config();
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -33,7 +33,7 @@ export default async function Openaiapi(req, res) {
   try {
     const response = await openai.createCompletion({
       model: 'text-davinci-003',
-      prompt: `Suggest three programming variable names in camel case for the follow ${animal}`,
+      prompt: `Please suggest three programming variable or function names in camel case in a consistent format for the description of ${animal}`,
       temperature: 0.8,
       max_tokens: 100,
     });
@@ -54,3 +54,5 @@ export default async function Openaiapi(req, res) {
 }
 
 // `Suggest three variable names each in camel case, Pascal case, and snake case for the follow ${animal}`
+
+// `Please suggest three programming variable names in camel case for Follow ${animal}`
