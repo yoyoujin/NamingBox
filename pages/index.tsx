@@ -1,14 +1,19 @@
 import ResultList from '@/components/ResultList';
 import Head from 'next/head';
 import Image from 'next/image';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styles from './index.module.css';
 
-export default function Home() {
-  const [identifierInput, setIdentifierInput] = useState('');
-  const [result, setResult] = useState();
+type ResponseData = {
+  result: string;
+  error?: string;
+};
 
-  const onSubmithandler = async (e) => {
+export default function Home() {
+  const [identifierInput, setIdentifierInput] = useState<string>('');
+  const [result, setResult] = useState<string[]>([]);
+
+  const onSubmithandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
@@ -20,7 +25,7 @@ export default function Home() {
         body: JSON.stringify({ identifier: identifierInput }),
       });
 
-      const data = await response.json();
+      const data: ResponseData = await response.json();
       if (response.status !== 200) {
         throw data.error || new Error(`Request failed with status ${response.status}`);
       }
@@ -30,7 +35,6 @@ export default function Home() {
       console.log(result);
     } catch (error) {
       console.error(error);
-      alert(error.message);
     }
   };
 

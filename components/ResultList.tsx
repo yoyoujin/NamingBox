@@ -1,7 +1,11 @@
 import React from 'react';
 import styles from './ResultList.module.css';
 
-const ResultList = ({ result }) => {
+interface Props {
+  result: string[];
+}
+
+const ResultList: React.FC<Props> = ({ result }) => {
   return (
     <>
       {result &&
