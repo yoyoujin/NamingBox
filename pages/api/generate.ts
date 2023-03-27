@@ -20,11 +20,11 @@ export default async function Openaiapi(req, res) {
     return;
   }
 
-  const animal = req.body.animal || '';
-  if (animal.trim().length === 0) {
+  const identifier = req.body.identifier || '';
+  if (identifier.trim().length === 0) {
     res.status(400).json({
       error: {
-        message: 'Please enter a valid animal',
+        message: 'Please enter a valid identifier role',
       },
     });
     return;
@@ -33,7 +33,7 @@ export default async function Openaiapi(req, res) {
   try {
     const response = await openai.createCompletion({
       model: 'text-davinci-003',
-      prompt: `Please suggest three programming variable or function names in camel case in a consistent format for the description of ${animal}`,
+      prompt: `Please suggest three programming identifier or function names in camel case in a consistent format for the description of ${identifier}`,
       temperature: 0.8,
       max_tokens: 100,
     });
@@ -53,6 +53,6 @@ export default async function Openaiapi(req, res) {
   }
 }
 
-// `Suggest three variable names each in camel case, Pascal case, and snake case for the follow ${animal}`
+// `Suggest three identifier names each in camel case, Pascal case, and snake case for the follow ${identifier}`
 
-// `Please suggest three programming variable names in camel case for Follow ${animal}`
+// `Please suggest three programming variable names in camel case for Follow ${variable}`

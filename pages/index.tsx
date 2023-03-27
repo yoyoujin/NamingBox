@@ -1,10 +1,11 @@
+import ResultList from '@/components/ResultList';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useState } from 'react';
 import styles from './index.module.css';
 
 export default function Home() {
-  const [animalInput, setAnimalInput] = useState('');
+  const [identifierInput, setIdentifierInput] = useState('');
   const [result, setResult] = useState();
 
   const onSubmithandler = async (e) => {
@@ -16,7 +17,7 @@ export default function Home() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ animal: animalInput }),
+        body: JSON.stringify({ identifier: identifierInput }),
       });
 
       const data = await response.json();
@@ -25,7 +26,7 @@ export default function Home() {
       }
 
       setResult(data.result.split('\n').splice(2));
-      setAnimalInput('');
+      setIdentifierInput('');
       console.log(result);
     } catch (error) {
       console.error(error);
@@ -36,7 +37,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Variable Naming Box!</title>
+        <title>identifier Naming Box!</title>
         <link rel='icon' href='/box-logo.svg' />
       </Head>
       <main className={styles.main}>
@@ -45,22 +46,17 @@ export default function Home() {
         <form onSubmit={onSubmithandler}>
           <input
             type='text'
-            name='animal'
-            value={animalInput}
+            name='identifier'
+            value={identifierInput}
             onChange={(e) => {
-              setAnimalInput(e.target.value);
+              setIdentifierInput(e.target.value);
             }}
             placeholder='What is the role of the variable?'
           />
           <input className={styles.button} type='submit' value='Generate names ✨' />
         </form>
         <ul>
-          {result &&
-            result.map((name, index) => (
-              <li className={styles.result} key={index}>
-                {name}
-              </li>
-            ))}
+          <ResultList result={result} />
         </ul>
       </main>
     </>
