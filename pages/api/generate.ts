@@ -1,4 +1,6 @@
 import dotenv from 'dotenv';
+import { NextApiRequest, NextApiResponse } from 'next';
+import Error from 'next/error';
 import { Configuration, OpenAIApi } from 'openai';
 
 dotenv.config({ path: __dirname + './env' });
@@ -10,7 +12,7 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-export default async function Openaiapi(req, res): Promise<void> {
+export default async function Openaiapi(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   if (!configuration.apiKey) {
     res.status(500).json({
       error: {
@@ -38,7 +40,7 @@ export default async function Openaiapi(req, res): Promise<void> {
       max_tokens: 100,
     });
     res.status(200).json({ result: response.data.choices[0].text });
-  } catch (error) {
+  } catch (error: any) {
     if (error.response) {
       console.log(error(error.response.status, error.response.data));
       res.status(error.resopnse.status).json(error.response.data);
